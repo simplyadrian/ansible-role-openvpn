@@ -1,0 +1,22 @@
+---
+- name: Get openvpn access server installer (Redhat)
+  get_url:
+    url: "{{ openvpn_as_yum_url }}{{ openvpn_as_yum_package }}"
+    dest: /tmp
+  register: get_openvpn_as
+
+ - debug: 
+     msg="openvpn access server was downloaded"
+   when: get_openvpn_as|changed
+
+- name: Check if openvpn access server is installed
+  command: yum list installed "{{ openvpn_as_yum_package }}" 
+  register: check_yum
+  failed_when: check_yum.rc > 1
+  changed_when: check_yum.rc == 1
+
+- name: Install openvpn access server (Redhat)
+  yum:
+    name: "/tmp/{{ openvpn_as_yum_package }}"
+  sudo: true
+  when:  check_yum.rc == 1

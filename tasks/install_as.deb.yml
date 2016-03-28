@@ -1,0 +1,22 @@
+---
+- name: Get openvpn access server installer (Debian)
+  get_url:
+    url: "{{ openvpn_as_deb_url }}{{ openvpn_as_deb_package }}"
+    dest: /tmp
+  register: get_openvpn_as
+
+ - debug: 
+     msg="openvpn access server was downloaded"
+   when: get_openvpn_as|changed
+
+- name: Check if openvpn access server is installed
+  command: dpkg-query -W openvpn-as
+  register: check_deb
+  failed_when: check_deb.rc > 1
+  changed_when: check_deb.rc == 1
+
+- name: Install openvpn access server (Debian)
+  apt:
+    deb: "/tmp/{{ openvpn_as_deb_package }}"
+  sudo: true
+  when:  check_deb.rc == 1
