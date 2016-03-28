@@ -5,8 +5,7 @@
     dest: /tmp
   register: get_openvpn_as
 
- - debug: 
-     msg="openvpn access server was downloaded"
+ - debug: msg="openvpn access server was downloaded"
    when: get_openvpn_as|changed
 
 - name: Check if openvpn access server is installed
