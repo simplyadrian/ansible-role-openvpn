@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  vars:
+    docker_tags: "{{lookup('env', 'DOCKER_TAGS')|default('my_test', true)}}"
+  tasks:
+    - name: create dockerfile
+      template: src=Dockerfile.j2 dest=./Dockerfile 
+
+    - name: run tests
+      shell: "docker build -t {{docker_tags}} ." 

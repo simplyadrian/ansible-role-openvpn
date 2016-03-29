@@ -5,8 +5,9 @@
     dest: /tmp
   register: get_openvpn_as
 
- - debug: msg="openvpn access server was downloaded"
-   when: get_openvpn_as|changed
+- debug:
+    msg: "{{ openvpn_as_deb_package }} was downloaded"
+  when: get_openvpn_as|changed
 
 - name: Check if openvpn access server is installed
   command: dpkg-query -W openvpn-as
@@ -15,7 +16,10 @@
   changed_when: check_deb.rc == 1
 
 - name: Install openvpn access server (Debian)
-  apt:
-    deb: "/tmp/{{ openvpn_as_deb_package }}"
+  shell: dpkg -i "/tmp/{{ openvpn_as_deb_package }}"
   sudo: true
   when:  check_deb.rc == 1
+
+- name: Install dependencies (Debian)
+  apt: name={{item}}
+  with_items: [libpam-pwdfile, python-passlib, expect]

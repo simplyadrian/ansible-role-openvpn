@@ -8,5 +8,4 @@
 - include: install_as.yum.yml
   when: ansible_os_family == 'RedHat'
 
-- name: Ensure OpenVPN is started
-  service: name=openvpn state=started enabled=yes
+- include: configure_as.yml

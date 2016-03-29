@@ -5,9 +5,9 @@
     dest: /tmp
   register: get_openvpn_as
 
- - debug: 
-     msg="openvpn access server was downloaded"
-   when: get_openvpn_as|changed
+- debug:
+    msg: "{{ openvpn_as_yum_package }} was downloaded"
+  when: get_openvpn_as|changed
 
 - name: Check if openvpn access server is installed
   command: yum list installed "{{ openvpn_as_yum_package }}" 

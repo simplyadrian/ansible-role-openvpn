@@ -1,0 +1,22 @@
+---
+- name: Setup PAM
+  template: src=openvpn.pam.j2 dest=/etc/pam.d/openvpn
+  when: openvpn_use_pam
+
+- name: Configure users
+  htpasswd: path={{openvpn_etcdir}}/users name={{item.name}} password={{item.password}} crypt_scheme=des_crypt
+  with_items: openvpn_use_pam_users
+
+- name: Check for expect script
+  stat:
+    path: /tmp/ovpn-init.exp
+  register: exp
+
+- name: Copy expect script to remote server
+  copy:
+    src: ovpn-init.exp
+    dest: /tmp/ovpn-init.exp
+    mode: 0777
+
+- name: Run expect script
+  command: /tmp/ovpn-init.exp

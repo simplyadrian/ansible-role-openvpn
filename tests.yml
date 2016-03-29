@@ -1,0 +1,15 @@
+---
+- hosts: test
+  vars:
+    openvpn_enabled: no
+    openvpn_as_enabled: yes
+    openvpn_as_deb_url: http://swupdate.openvpn.org/as/
+    openvpn_as_deb_package: openvpn-as-2.0.25-Ubuntu14.amd_64.deb
+    openvpn_etcdir: /usr/local/openvpn_as/
+  pre_tasks:
+    - name: install dependencies for docker
+      apt: pkg={{item}} state=present update_cache=yes
+      with_items:
+        - iptables
+  roles:
+    - ./

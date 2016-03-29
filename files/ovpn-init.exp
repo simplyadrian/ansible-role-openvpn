@@ -1,0 +1,32 @@
+#!/usr/bin/expect
+
+set timeout 20
+
+spawn "/usr/local/openvpn_as/bin/ovpn-init"
+
+expect "Please enter 'DELETE' to delete existing configuration:"
+send -- "DELETE\r"
+expect "Please enter 'yes' to indicate your agreement:"
+send -- "yes\r"
+expect "Press ENTER for default:"
+send -- "yes\r"
+expect "Press Enter for default:"
+send -- "1\r"
+expect "Press ENTER for default:"
+send -- "943\r"
+expect "Press ENTER for default:"
+send -- "443\r"
+expect "Press ENTER for default:"
+send -- "yes\r"
+expect "Press ENTER for default:"
+send -- "yes\r"
+expect "Press ENTER for default:"
+send -- "no\r"
+expect "Press ENTER for default:"
+send -- "yes\r"
+expect "Press ENTER for default:"
+send -- "yes\r"
+expect "Please specify your OpenVPN-AS license key (or leave blank to specify later):"
+send -- "\r"
+
+interact
