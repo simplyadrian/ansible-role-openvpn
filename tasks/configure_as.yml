@@ -18,5 +18,5 @@
     dest: /tmp/ovpn-init.exp
     mode: 0777
 
-- name: Run expect script
-  command: /tmp/ovpn-init.exp
+#- name: Run expect script
+#  command: /tmp/ovpn-init.exp
