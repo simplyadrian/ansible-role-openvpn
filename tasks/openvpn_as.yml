@@ -9,3 +9,6 @@
   when: ansible_os_family == 'RedHat'
 
 - include: configure_as.yml
+
+- name: Ensure OpenVPNAS is started
+  service: name=openvpnas pattern=/var/run/openvpnas.pid state=started enabled=yes

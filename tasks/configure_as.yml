@@ -20,6 +20,3 @@
 
 #- name: Run expect script
 #  command: /tmp/ovpn-init.exp
-
-- name: openvpnas restart
-  service: name=openvpnas state=restarted
